@@ -2,88 +2,22 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <style>
-    .input_video{
-        display: none;
-    }
-    .container{
-      position: relative;
-    }
-    canvas{
-      position: absolute;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-  <div class="container">
+  <div class="dcontainer">
     <video class="input_video"></video>
     <div class="container">
-      <canvas class="output_canvas" width="1280px" height="720px"></canvas>
-      <canvas id="draw" width="1280px" height="720px"></canvas>
+      <canvas class="output_canvas"></canvas>
+      <canvas id="draw"></canvas>
     </div>
   </div>
 
   <script src="camera_utils.js"></script>
   <script src="drawing_utils.js"></script>
   <script src="hands/hands.js"></script>
-  <script>
-    const videoElement = document.querySelector('.input_video');
-    const canvasElement = document.querySelector('.output_canvas');
-    const ctx = canvasElement.getContext('2d');
-    let dc = document.getElementById('draw')
-    let dctx = dc.getContext('2d')
-    let x,y,px,py
-    
-    function onResults(results) {
-      ctx.save();
-      ctx.clearRect(0, 0, canvasElement.width, canvasElement.height);
-      ctx.drawImage(results.image, 0, 0, canvasElement.width, canvasElement.height);
-      if (results.multiHandLandmarks) {
-        for (const landmarks of results.multiHandLandmarks) {
-          console.log(landmarks)
-          px = x
-          py = y
-          x = landmarks[8].x*1280
-          y = landmarks[8].y*720
-          ctx.beginPath()
-          ctx.fillStyle = "blue"
-          ctx.arc(x,y,15,0,2*Math.PI)
-          ctx.fill()
-          drawConnectors(ctx, landmarks, HAND_CONNECTIONS,{color: '#00FF00', lineWidth: 5});
-          drawLandmarks(ctx, landmarks, {color: '#FF0000', lineWidth: 2});
-          dctx.beginPath()
-          dctx.moveTo(px,py)
-          dctx.strokeStyle = "#73ff00"
-          dctx.lineWidth = 5
-          dctx.lineTo(x,y)
-          dctx.stroke()
-        }
-      }
-      ctx.restore();
-    }
-    
-    const hands = new Hands({locateFile: (file) => {
-      return `hands/${file}`;
-    }});
-    hands.setOptions({
-      selfieMode: true,
-      maxNumHands: 1,
-      modelComplexity: 1,
-      minDetectionConfidence: 0.5,
-      minTrackingConfidence: 0.5
-    });
-    hands.onResults(onResults);
-    
-    const camera = new Camera(videoElement, {
-      onFrame: async () => {
-        await hands.send({image: videoElement});
-      },
-      width: 1280,
-      height: 720
-    });
-    camera.start();
-  </script>
+  <script src="script.js"></script>
 </body>
     
 </html>
