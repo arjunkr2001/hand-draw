@@ -15,7 +15,7 @@ videoElement.addEventListener('loadedmetadata',e=>{
 })
 let dctx = dc.getContext('2d')
 let x,y,px,py
-    
+
 function onResults(results) {
     ctx.save();
     ctx.clearRect(0, 0, canvasElement.width, canvasElement.height);
@@ -32,13 +32,15 @@ function onResults(results) {
           ctx.arc(x,y,10,0,2*Math.PI)
           ctx.fill()
           drawConnectors(ctx, landmarks, HAND_CONNECTIONS,{color: '#00ffee', lineWidth: 5});
-          drawLandmarks(ctx, landmarks, {color: '#FFaa00', lineWidth: 2});
-          dctx.beginPath()
-          dctx.moveTo(px,py)
-          dctx.strokeStyle = "#00ff00"
-          dctx.lineWidth = 3
-          dctx.lineTo(x,y)
-          dctx.stroke()
+          drawLandmarks(ctx, landmarks, {color: '#ee00ff', lineWidth: 2});
+          if(landmarks[8].y<landmarks[12].y-0.1){
+            dctx.beginPath()
+            dctx.moveTo(px,py)
+            dctx.strokeStyle = "#00ff00"
+            dctx.lineWidth = 3
+            dctx.lineTo(x,y)
+            dctx.stroke()
+          }
         }
     }
     ctx.restore();
