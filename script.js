@@ -6,6 +6,7 @@ const canvasElement = document.querySelector('.output_canvas');
 const ctx = canvasElement.getContext('2d');
 let dc = document.getElementById('draw')
 videoElement.addEventListener('loadedmetadata',e=>{
+  //document.getElementById("spinner").style.display = 'none'
   vw = videoElement.videoWidth
   vh = videoElement.videoHeight
   canvasElement.width = vw
@@ -40,6 +41,9 @@ function onResults(results) {
             dctx.lineWidth = 3
             dctx.lineTo(x,y)
             dctx.stroke()
+          }
+          if(landmarks[20].y<landmarks[12].y-0.17){
+            dctx.clearRect(0, 0, dc.width, dc.height)
           }
         }
     }
