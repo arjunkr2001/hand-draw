@@ -5,8 +5,10 @@ const videoElement = document.querySelector('.input_video');
 const canvasElement = document.querySelector('.output_canvas');
 const ctx = canvasElement.getContext('2d');
 let dc = document.getElementById('draw')
-videoElement.addEventListener('loadedmetadata',e=>{
+videoElement.addEventListener('play',()=>{
   document.getElementById("spinner").remove()
+})
+videoElement.addEventListener('loadedmetadata',e=>{
   vw = videoElement.videoWidth
   vh = videoElement.videoHeight
   canvasElement.width = vw
