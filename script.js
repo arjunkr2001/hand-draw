@@ -32,7 +32,7 @@ function onResults(results) {
     ctx.drawImage(results.image, 0, 0, canvasElement.width, canvasElement.height);
     if (results.multiHandLandmarks) {
         for (const landmarks of results.multiHandLandmarks) {
-          //console.log(landmarks)
+          //console.log(landmarks[12].z)
           px = x
           py = y
           x = landmarks[8].x*vw
@@ -42,8 +42,8 @@ function onResults(results) {
           ctx.fillStyle = "#00ffee"
           ctx.arc(x,y,10,0,2*Math.PI)
           ctx.fill()
-          drawConnectors(ctx, landmarks, HAND_CONNECTIONS,{color: '#00ffee', lineWidth: 5});
-          drawLandmarks(ctx, landmarks, {color: '#ee00ff', lineWidth: 2});
+          //drawConnectors(ctx, landmarks, HAND_CONNECTIONS,{color: '#00ffee', lineWidth: 5});
+          //drawLandmarks(ctx, landmarks, {color: '#ee00ff', lineWidth: 2});
           if(landmarks[8].y<landmarks[16].y-0.1){
             if(landmarks[8].y>landmarks[12].y){
               octx.beginPath()
@@ -61,7 +61,7 @@ function onResults(results) {
               dctx.stroke()
             }
           }
-          if(landmarks[20].y<landmarks[12].y-0.17){
+          if(landmarks[20].y<landmarks[12].y-((-landmarks[12].z*0.833)+0.05)){
             dctx.clearRect(0, 0, dc.width, dc.height)
           }
         }
